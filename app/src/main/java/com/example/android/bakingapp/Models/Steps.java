@@ -44,7 +44,7 @@ public class Steps implements Parcelable {
     public void setTumbnailUrl (String tumbnailUrl){
         this.mTumbnailUrl = tumbnailUrl;
     }
-    private Steps(Parcel parcel){
+    protected Steps(Parcel parcel){
         mId = parcel.readInt();
         mShortDescription = parcel.readString();
         mDescription = parcel.readString();

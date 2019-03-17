@@ -51,8 +51,8 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.RecipeView
         recipeViewHolder.titleTextView.setText(mRecipes.get(position).getName());
         String imageUrl = mRecipes.get(position).getImage();
         if (imageUrl != null){
-            Uri built = Uri.parse(imageUrl).buildUpon().build();
-            Picasso.get().load(built).into(recipeViewHolder.imageView);
+
+            Picasso.get().load(imageUrl.trim()).into(recipeViewHolder.imageView);
         }
 
 
@@ -60,8 +60,8 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.RecipeView
 
     @Override
     public int getItemCount() {
-
-        return mRecipes !=null ? mRecipes.size():0;
+        if (mRecipes == null) return 0;
+        return mRecipes.size();
 
     }
 

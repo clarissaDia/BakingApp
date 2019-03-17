@@ -29,7 +29,7 @@ public class Ingredients implements Parcelable {
         this.mIngredient = ingredient;
     }
 
-    private Ingredients (Parcel parcel){
+    protected Ingredients (Parcel parcel){
 mQuantity = parcel.readInt();
 mMeasure = parcel.readString();
 mIngredient = parcel.readString();
