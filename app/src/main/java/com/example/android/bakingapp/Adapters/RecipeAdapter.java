@@ -50,11 +50,11 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.RecipeView
     public void onBindViewHolder(@NonNull RecipeViewHolder recipeViewHolder, int position) {
         recipeViewHolder.titleTextView.setText(mRecipes.get(position).getName());
         String imageUrl = mRecipes.get(position).getImage();
-        if (imageUrl != null){
 
-            Picasso.get().load(imageUrl.trim()).into(recipeViewHolder.imageView);
-        }
-
+if(imageUrl!=""){
+    Uri uri = Uri.parse(imageUrl).buildUpon().build();
+    Picasso.get().load(uri).into(recipeViewHolder.imageView);
+}
 
     }
 

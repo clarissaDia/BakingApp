@@ -10,6 +10,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.RelativeLayout;
 
 import com.example.android.bakingapp.Adapters.RecipeAdapter;
 import com.example.android.bakingapp.Models.Recipe;
@@ -67,7 +68,6 @@ recipes.enqueue(new Callback<ArrayList<Recipe>>() {
 
     }
 });
-
         return rootView;
     }
 
