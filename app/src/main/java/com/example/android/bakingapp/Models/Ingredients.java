@@ -9,7 +9,7 @@ import com.google.gson.annotations.SerializedName;
 public class Ingredients implements Parcelable {
     @SerializedName("quantity")
     @Expose
-    private int mQuantity;
+    private Double mQuantity;
     @SerializedName("measure")
     @Expose
     private String mMeasure;
@@ -17,10 +17,10 @@ public class Ingredients implements Parcelable {
     @Expose
     private String mIngredient;
 
-    public int getQuantity(){
+    public Double getQuantity(){
         return mQuantity;
     }
-    public void setQuantity(int quantity){
+    public void setQuantity(Double quantity){
         this.mQuantity = quantity;
     }
 
@@ -39,7 +39,7 @@ public class Ingredients implements Parcelable {
     }
 
     protected Ingredients (Parcel parcel){
-mQuantity = parcel.readInt();
+mQuantity = parcel.readDouble();
 mMeasure = parcel.readString();
 mIngredient = parcel.readString();
     }
@@ -51,7 +51,12 @@ mIngredient = parcel.readString();
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-dest.writeInt(mQuantity);
+        if(mQuantity == null){
+            dest.writeByte((byte) (0x00));
+        }else {
+            dest.writeByte((byte) (0x01));
+            dest.writeDouble(mQuantity);
+        }
 dest.writeString(mMeasure);
 dest.writeString(mIngredient);
 

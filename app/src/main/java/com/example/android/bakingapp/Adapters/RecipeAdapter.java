@@ -19,15 +19,15 @@ import java.util.ArrayList;
 public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.RecipeViewHolder>  {
     ArrayList<Recipe> mRecipes;
     Context mContext;
-    final private ClickListenter clickListenter;
+    final private ClickListener clickListener;
 
 
-    public interface ClickListenter {
-        void onItemiClick (Recipe index);
+    public interface ClickListener {
+        void onItemClick(Recipe index);
     }
 
-    public RecipeAdapter (ClickListenter listenter){
-        clickListenter = listenter;
+    public RecipeAdapter (ClickListener listenter){
+        clickListener = listenter;
     }
 
     public void setRecipes(ArrayList<Recipe> recipes, Context context){
@@ -51,7 +51,7 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.RecipeView
         recipeViewHolder.titleTextView.setText(mRecipes.get(position).getName());
         String imageUrl = mRecipes.get(position).getImage();
 
-if(imageUrl!=""){
+if(imageUrl != null){
     Uri uri = Uri.parse(imageUrl).buildUpon().build();
     Picasso.get().load(uri).into(recipeViewHolder.imageView);
 }
@@ -80,7 +80,7 @@ view.setOnClickListener(this);
         @Override
         public void onClick(View v) {
             int clickedPosition = getAdapterPosition();
-            clickListenter.onItemiClick(mRecipes.get(clickedPosition));
+            clickListener.onItemClick(mRecipes.get(clickedPosition));
 
         }
     }
