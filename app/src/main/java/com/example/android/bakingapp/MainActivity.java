@@ -10,6 +10,7 @@ import com.example.android.bakingapp.Models.Recipe;
 import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity implements RecipeAdapter.ClickListener {
+    static String INDEX_RECIPE = "index_recipe";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,7 +23,7 @@ public class MainActivity extends AppCompatActivity implements RecipeAdapter.Cli
         Bundle indexBundle = new Bundle();
         ArrayList<Recipe> indexRecipe = new ArrayList<>();
         indexRecipe.add(index);
-        indexBundle.putParcelableArrayList("index_Recipe", indexRecipe);
+        indexBundle.putParcelableArrayList(INDEX_RECIPE, indexRecipe);
         final Intent detailsIntent = new Intent(this,RecipeDetailActivity.class);
         detailsIntent.putExtras(indexBundle);
         startActivity(detailsIntent);

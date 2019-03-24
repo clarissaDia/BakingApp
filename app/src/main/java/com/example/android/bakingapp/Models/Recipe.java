@@ -18,10 +18,10 @@ public class Recipe implements Parcelable {
     private String mName;
     @SerializedName("ingredients")
     @Expose
-    private List<Ingredients> mIngredients = null;
+    private List<Ingredients> mIngredients;
     @SerializedName("steps")
     @Expose
-    private List<Steps> mSteps = null;
+    private List<Steps> mSteps;
     @SerializedName("servings")
     @Expose
     private int mServings;

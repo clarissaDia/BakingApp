@@ -16,7 +16,7 @@ import com.example.android.bakingapp.R;
 import java.util.List;
 
 public class DetailsAdapter extends RecyclerView.Adapter<DetailsAdapter.DetailsViewHolder> {
-    List<Steps> mSteps;
+    private List<Steps> mSteps;
     private String mRecipeName;
     final private ListClickListener mListClickListener;
 
