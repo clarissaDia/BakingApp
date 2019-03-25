@@ -39,7 +39,10 @@ public class Ingredients implements Parcelable {
     }
 
     protected Ingredients (Parcel parcel){
-mQuantity = parcel.readDouble();
+        byte quantityByte = parcel.readByte();
+        if (quantityByte != 0x00){
+            mQuantity = parcel.readDouble();
+        }
 mMeasure = parcel.readString();
 mIngredient = parcel.readString();
     }

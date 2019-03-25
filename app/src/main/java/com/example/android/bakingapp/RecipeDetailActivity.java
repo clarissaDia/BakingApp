@@ -11,11 +11,17 @@ import com.example.android.bakingapp.Models.Steps;
 import java.util.ArrayList;
 import java.util.List;
 
-public class RecipeDetailActivity extends AppCompatActivity implements DetailsAdapter.ListClickListener {
+import static com.example.android.bakingapp.MainActivity.SELECTED_INDEX;
+import static com.example.android.bakingapp.MainActivity.SELECTED_STEPS;
+
+public class RecipeDetailActivity extends AppCompatActivity implements DetailsAdapter.ListClickListener,
+StepsFragment.ListClickListener{
+
 private ArrayList<Recipe> recipeArrayList;
 String recipeName;
     static String INDEX_RECIPE = "index_recipe";
     static String STACK_RECIPE_DETAIL="stack_recipe_detail";
+    static String STACK_RECIPE_STEP_DETAIL="STACK_RECIPE_STEP_DETAIL";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -40,6 +46,16 @@ String recipeName;
 
     @Override
     public void onItemClick(List<Steps> stepsList, int clickedIndex, String recipeName) {
+final StepsFragment stepsFragment = new StepsFragment();
+FragmentManager fragmentManager = getSupportFragmentManager();
+Bundle stepsBundle = new Bundle();
+stepsBundle.putParcelableArrayList(SELECTED_STEPS,(ArrayList<Steps>)stepsList);
+stepsBundle.putInt(SELECTED_INDEX,clickedIndex);
+stepsBundle.putString("Title",recipeName);
+stepsFragment.setArguments(stepsBundle);
+fragmentManager.beginTransaction()
+        .replace(R.id.fragment_container,stepsFragment).addToBackStack(STACK_RECIPE_STEP_DETAIL)
+        .commit();
 
     }
 }

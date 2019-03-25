@@ -10,7 +10,6 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.android.bakingapp.Adapters.DetailsAdapter;
@@ -18,10 +17,9 @@ import com.example.android.bakingapp.Models.Ingredients;
 import com.example.android.bakingapp.Models.Recipe;
 
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Objects;
 
-import static com.example.android.bakingapp.MainActivity.INDEX_RECIPE;
+import static com.example.android.bakingapp.MainActivity.SELECTED_RECIPE;
 
 
 public class DetailFragment extends Fragment {
@@ -42,9 +40,9 @@ public class DetailFragment extends Fragment {
         final TextView detailTextView;
         recipeArrayList = new ArrayList<>();
         if (savedInstanceState != null){
-            recipeArrayList = savedInstanceState.getParcelableArrayList(INDEX_RECIPE);
+            recipeArrayList = savedInstanceState.getParcelableArrayList(SELECTED_RECIPE);
         }else {
-            recipeArrayList = Objects.requireNonNull(getArguments()).getParcelableArrayList(INDEX_RECIPE);
+            recipeArrayList = Objects.requireNonNull(getArguments()).getParcelableArrayList(SELECTED_RECIPE);
         }
 
         assert recipeArrayList != null;
@@ -73,7 +71,7 @@ public class DetailFragment extends Fragment {
     @Override
     public void onSaveInstanceState(@NonNull Bundle currentState) {
         super.onSaveInstanceState(currentState);
-        currentState.putParcelableArrayList(INDEX_RECIPE, recipeArrayList);
+        currentState.putParcelableArrayList(SELECTED_RECIPE, recipeArrayList);
         currentState.putString("title", recipeName);
     }
 }

@@ -72,7 +72,7 @@ public class Recipe implements Parcelable {
     }
 
     protected Recipe (Parcel parcel){
-        mId = parcel.readByte() == 0x00 ? null : parcel.readInt();
+        mId = parcel.readInt();
         mName = parcel.readString();
         if (parcel.readByte() == 0x01){
             mIngredients = new ArrayList<Ingredients>();
