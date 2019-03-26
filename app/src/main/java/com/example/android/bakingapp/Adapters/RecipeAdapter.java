@@ -51,7 +51,9 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.RecipeView
         recipeViewHolder.titleTextView.setText(mRecipes.get(position).getName());
         String imageUrl = mRecipes.get(position).getImage();
 
-if(imageUrl != null){
+if(imageUrl != null && imageUrl.isEmpty()) {
+    recipeViewHolder.imageView.setImageResource(R.drawable.baseline_cake_black_48dp);
+}else {
     Uri uri = Uri.parse(imageUrl).buildUpon().build();
     Picasso.get().load(uri).into(recipeViewHolder.imageView);
 }

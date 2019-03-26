@@ -48,7 +48,7 @@ public class DetailFragment extends Fragment {
         assert recipeArrayList != null;
         recipeName = recipeArrayList.get(0).getName();
         View rootView = inflater.inflate(R.layout.fragment_detail,container,false);
-        detailTextView = (TextView) rootView.findViewById(R.id.tv_detail_recipe);
+        detailTextView = (TextView) rootView.findViewById(R.id.tv_recipe_ingredients);
         for (Ingredients i : recipeArrayList.get(0).getIngredients()) {
             detailTextView.append("\u2022 " + i.getIngredient() + "\n");
             detailTextView.append("\t\t\t Quantity: " + i.getQuantity().toString() + "\n");

@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="horizontal"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical"
-    tools:context=".DetailFragment">
+    android:fitsSystemWindows="true">
+
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -14,8 +14,8 @@
         android:gravity="center"/>
 
     <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="230dp"
+        android:layout_width="230dp"
+        android:layout_height="wrap_content"
         android:scrollbarStyle="insideInset"
         android:clipToPadding="false"
         android:scrollIndicators="top|bottom"
@@ -45,6 +45,5 @@
         android:id="@+id/rv_detail"
         >
     </android.support.v7.widget.RecyclerView>
-
 
 </LinearLayout>

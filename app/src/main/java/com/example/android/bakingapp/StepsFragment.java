@@ -8,6 +8,7 @@ import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -119,7 +120,7 @@ if (!videoUrl.isEmpty()){
         Button previousButton = (Button)  rootView.findViewById(R.id.previous_button);
 Button nextButton = (Button) rootView.findViewById(R.id.next_button);
 
-previousButton.setOnClickListener(new View.OnClickListener() {
+previousButton.setOnClickListener(new OnClickListener() {
     @Override
     public void onClick(View v) {
         if (stepsArrayList.get(selectedIndex).getId() > 0){
@@ -134,7 +135,7 @@ previousButton.setOnClickListener(new View.OnClickListener() {
     }
 });
 
-nextButton.setOnClickListener(new View.OnClickListener() {
+nextButton.setOnClickListener(new OnClickListener() {
     @Override
     public void onClick(View v) {
         int lastIndex = stepsArrayList.size()-1;
@@ -150,10 +151,6 @@ nextButton.setOnClickListener(new View.OnClickListener() {
 
     }
 });
-
-
-
-
         // Inflate the layout for this fragment
         return rootView;
     }
@@ -187,6 +184,5 @@ simpleExoPlayer.setPlayWhenReady(true);
         super.onDetach();
 
     }
-
 
 }
