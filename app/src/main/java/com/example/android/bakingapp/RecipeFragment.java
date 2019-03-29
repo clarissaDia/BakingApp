@@ -4,6 +4,7 @@ import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -43,8 +44,13 @@ public class RecipeFragment extends Fragment {
         final RecipeAdapter recipeAdapter = new RecipeAdapter((MainActivity)getActivity());
         mRecyclerView.setAdapter(recipeAdapter);
 
+        if (rootView.getTag()!= null && rootView.getTag().equals("phone-land")){
+            GridLayoutManager gridLayoutManager = new GridLayoutManager(getContext(),2);
+            mRecyclerView.setLayoutManager(gridLayoutManager);
+        }else {
+
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
-        mRecyclerView.setLayoutManager(linearLayoutManager);
+        mRecyclerView.setLayoutManager(linearLayoutManager);}
 
         BakingUtils bakingUtils = RetrofitBuilder.Retrieve();
         Call<ArrayList<Recipe>> recipes = bakingUtils.getAllRecipes();

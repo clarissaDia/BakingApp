@@ -1,5 +1,6 @@
 package com.example.android.bakingapp;
 
+import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -11,6 +12,7 @@ import com.example.android.bakingapp.Models.Steps;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.example.android.bakingapp.MainActivity.INDEX_RECIPE;
 import static com.example.android.bakingapp.MainActivity.SELECTED_INDEX;
 import static com.example.android.bakingapp.MainActivity.SELECTED_STEPS;
 
@@ -19,7 +21,7 @@ StepsFragment.ListClickListener{
 
 private ArrayList<Recipe> recipeArrayList;
 String recipeName;
-    static String INDEX_RECIPE = "index_recipe";
+
     static String STACK_RECIPE_DETAIL="stack_recipe_detail";
     static String STACK_RECIPE_STEP_DETAIL="STACK_RECIPE_STEP_DETAIL";
     @Override
@@ -29,7 +31,9 @@ String recipeName;
         if (savedInstanceState == null){
             Bundle indexRecipe = getIntent().getExtras();
             recipeArrayList = new ArrayList<>();
+            assert indexRecipe != null;
             recipeArrayList = indexRecipe.getParcelableArrayList(INDEX_RECIPE);
+            assert recipeArrayList != null;
             recipeName = recipeArrayList.get(0).getName();
 
             final DetailFragment detailFragment = new DetailFragment();
@@ -56,6 +60,12 @@ stepsFragment.setArguments(stepsBundle);
 fragmentManager.beginTransaction()
         .replace(R.id.fragment_container,stepsFragment).addToBackStack(STACK_RECIPE_STEP_DETAIL)
         .commit();
+    }
 
+    @Override
+    protected void onSaveInstanceState(@Nullable Bundle savedInstanceState) {
+        super.onSaveInstanceState(savedInstanceState);
+        assert savedInstanceState != null;
+        savedInstanceState.putString("Title",recipeName);
     }
 }

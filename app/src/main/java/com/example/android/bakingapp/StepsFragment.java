@@ -1,6 +1,7 @@
 package com.example.android.bakingapp;
 
 import android.content.Context;
+import android.content.res.Configuration;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
@@ -35,7 +36,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static com.example.android.bakingapp.MainActivity.SELECTED_INDEX;
-import static com.example.android.bakingapp.MainActivity.SELECTED_RECIPE;
+import static com.example.android.bakingapp.MainActivity.INDEX_RECIPE;
 import static com.example.android.bakingapp.MainActivity.SELECTED_STEPS;
 
 
@@ -60,11 +61,6 @@ public class StepsFragment extends Fragment {
 
     }
 
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-
-    }
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
@@ -80,6 +76,7 @@ public class StepsFragment extends Fragment {
           mRecipeName = savedInstanceState.getString("Title");
 
       }else {
+          assert getArguments() != null;
           stepsArrayList = getArguments().getParcelableArrayList(SELECTED_STEPS);
           if (stepsArrayList != null){
               stepsArrayList = getArguments().getParcelableArrayList(SELECTED_STEPS);
@@ -88,7 +85,7 @@ public class StepsFragment extends Fragment {
 
           }
           else {
-              recipeArrayList = getArguments().getParcelableArrayList(SELECTED_RECIPE);
+              recipeArrayList = getArguments().getParcelableArrayList(INDEX_RECIPE);
               stepsArrayList = (ArrayList<Steps>)recipeArrayList.get(0).getSteps();
               selectedIndex = 0;
           }
@@ -98,6 +95,7 @@ public class StepsFragment extends Fragment {
 View rootView = inflater.inflate(R.layout.fragment_steps,container,false);
 stepsTextView = (TextView) rootView.findViewById(R.id.tv_step_text);
 stepsTextView.setText(stepsArrayList.get(selectedIndex).getDescription());
+stepsTextView.setVisibility(View.VISIBLE);
 playerView = rootView.findViewById(R.id.video_player_view);
 
 String videoUrl = stepsArrayList.get(selectedIndex).getVideoUrl();
@@ -115,6 +113,10 @@ if (!videoUrl.isEmpty()){
     simpleExoPlayer = null;
     Toast.makeText(getActivity(),"no video",Toast.LENGTH_LONG).show();
 
+}
+
+if (isInLandscape(getContext())){
+    stepsTextView.setVisibility(View.GONE);
 }
 
         Button previousButton = (Button)  rootView.findViewById(R.id.previous_button);
@@ -174,15 +176,54 @@ simpleExoPlayer.setPlayWhenReady(true);
     }
 
     @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-
+    public void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putParcelableArrayList(SELECTED_STEPS,stepsArrayList);
+        outState.putInt(SELECTED_INDEX,selectedIndex);
+        outState.putString("Title", mRecipeName);
     }
+
+    public boolean isInLandscape (Context context){
+        return (context.getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE);
+    }
+
+
 
     @Override
     public void onDetach() {
         super.onDetach();
+        if(simpleExoPlayer!=null){
+            simpleExoPlayer.stop();
+            simpleExoPlayer.release();
+        }
 
     }
 
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        if (simpleExoPlayer!=null){
+            simpleExoPlayer.stop();
+            simpleExoPlayer.release();
+            simpleExoPlayer=null;
+        }
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        if (simpleExoPlayer!=null){
+            simpleExoPlayer.stop();
+            simpleExoPlayer.release();
+        }
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        if (simpleExoPlayer!=null){
+            simpleExoPlayer.stop();
+            simpleExoPlayer.release();
+        }
+    }
 }

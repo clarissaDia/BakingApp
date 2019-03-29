@@ -4,17 +4,18 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:fitsSystemWindows="true">
-
     <TextView
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Ingredients"
-        android:textSize="25sp"
+        android:padding="10dp"
+        android:textSize="15sp"
         android:textAllCaps="true"
-        android:gravity="center"/>
+        android:gravity="center_horizontal"/>
+
 
     <ScrollView
-        android:layout_width="230dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:scrollbarStyle="insideInset"
         android:clipToPadding="false"
@@ -24,23 +25,23 @@
         android:fillViewport="false">
 
         <TextView
-            android:layout_width="match_parent"
-            android:layout_height="200dp"
+            android:layout_width="wrap_content"
+            android:layout_height="100dp"
             android:textSize="15sp"
-            android:layout_marginLeft="10dp"
             android:id="@+id/tv_recipe_ingredients" />
     </ScrollView>
 
     <TextView
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="steps"
-        android:textSize="25sp"
+        android:textSize="15sp"
         android:textAllCaps="true"
+        android:padding="10dp"
         android:gravity="center"/>
 
     <android.support.v7.widget.RecyclerView
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/rv_detail"
         >

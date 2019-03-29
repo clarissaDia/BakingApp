@@ -15,17 +15,17 @@ import android.widget.TextView;
 import com.example.android.bakingapp.Adapters.DetailsAdapter;
 import com.example.android.bakingapp.Models.Ingredients;
 import com.example.android.bakingapp.Models.Recipe;
+import com.example.android.bakingapp.Widget.UpdateBakingWidgetService;
 
 import java.util.ArrayList;
 import java.util.Objects;
 
-import static com.example.android.bakingapp.MainActivity.SELECTED_RECIPE;
+import static com.example.android.bakingapp.MainActivity.INDEX_RECIPE;
 
 
 public class DetailFragment extends Fragment {
     ArrayList<Recipe> recipeArrayList;
     String recipeName;
-
 
 
 
@@ -40,19 +40,24 @@ public class DetailFragment extends Fragment {
         final TextView detailTextView;
         recipeArrayList = new ArrayList<>();
         if (savedInstanceState != null){
-            recipeArrayList = savedInstanceState.getParcelableArrayList(SELECTED_RECIPE);
+            recipeArrayList = savedInstanceState.getParcelableArrayList(INDEX_RECIPE);
         }else {
-            recipeArrayList = Objects.requireNonNull(getArguments()).getParcelableArrayList(SELECTED_RECIPE);
+            recipeArrayList = Objects.requireNonNull(getArguments()).getParcelableArrayList(INDEX_RECIPE);
         }
 
         assert recipeArrayList != null;
         recipeName = recipeArrayList.get(0).getName();
         View rootView = inflater.inflate(R.layout.fragment_detail,container,false);
         detailTextView = (TextView) rootView.findViewById(R.id.tv_recipe_ingredients);
+        ArrayList<String> ingredientsForWidget = new ArrayList<>();
         for (Ingredients i : recipeArrayList.get(0).getIngredients()) {
             detailTextView.append("\u2022 " + i.getIngredient() + "\n");
             detailTextView.append("\t\t\t Quantity: " + i.getQuantity().toString() + "\n");
             detailTextView.append("\t\t\t Measure: " + i.getMeasure() + "\n\n");
+
+            ingredientsForWidget.add(i.getIngredient()+"\n"+
+                    "Quantity: "+i.getQuantity().toString()+"\n"+
+                    "Measure: "+i.getMeasure()+"\n");
         }
 
 
@@ -64,6 +69,7 @@ public class DetailFragment extends Fragment {
         detailsRecyclerView.setAdapter(detailsAdapter);
         detailsAdapter.setRecipeDetails(recipeArrayList,getContext());
 
+        UpdateBakingWidgetService.startBakingWidgetService(getContext(),ingredientsForWidget);
 
         return rootView;
     }
@@ -71,7 +77,7 @@ public class DetailFragment extends Fragment {
     @Override
     public void onSaveInstanceState(@NonNull Bundle currentState) {
         super.onSaveInstanceState(currentState);
-        currentState.putParcelableArrayList(SELECTED_RECIPE, recipeArrayList);
+        currentState.putParcelableArrayList(INDEX_RECIPE, recipeArrayList);
         currentState.putString("title", recipeName);
     }
 }
