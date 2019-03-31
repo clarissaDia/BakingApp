@@ -4,6 +4,8 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
+import android.view.View;
 
 import com.example.android.bakingapp.Adapters.DetailsAdapter;
 import com.example.android.bakingapp.Models.Recipe;
@@ -44,8 +46,31 @@ String recipeName;
                     .addToBackStack(STACK_RECIPE_DETAIL)
                     .commit();
         }else {
-            recipeName = savedInstanceState.getString("title");
+            recipeName = savedInstanceState.getString("Title");
         }
+
+        Toolbar bakingToolbar = (Toolbar) findViewById(R.id.baking_toolbar);
+        setSupportActionBar(bakingToolbar);
+        getSupportActionBar().setHomeButtonEnabled(true);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setTitle(recipeName);
+
+        bakingToolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                FragmentManager fragmentManager = getSupportFragmentManager();
+                if (fragmentManager.getBackStackEntryCount() > 1){
+                    fragmentManager.popBackStack(STACK_RECIPE_DETAIL, 0);
+                }
+                else if (fragmentManager.getBackStackEntryCount() > 0) {
+                    //go back to "Recipe" screen
+                    finish();
+            }
+            else {finish();
+
+                }
+        }
+    });
     }
 
     @Override
