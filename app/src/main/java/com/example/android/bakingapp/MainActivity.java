@@ -20,6 +20,7 @@ public class MainActivity extends AppCompatActivity implements RecipeAdapter.Cli
     static String ALL_RECIPES="All_Recipes";
     static String SELECTED_STEPS="Selected_Steps";
     static String SELECTED_INDEX="Selected_Index";
+    public static String SHARED_PREFERENCE_KEY = "SHARED_PREFERENCE_KEY";
     @Nullable
     private SimpleIdlingResource mSimpleIdlingResource;
     @VisibleForTesting

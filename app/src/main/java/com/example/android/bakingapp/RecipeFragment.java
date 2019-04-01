@@ -1,7 +1,5 @@
 package com.example.android.bakingapp;
 
-import android.content.Context;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
@@ -11,7 +9,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.RelativeLayout;
 
 import com.example.android.bakingapp.Adapters.RecipeAdapter;
 import com.example.android.bakingapp.Models.Recipe;
@@ -27,8 +24,7 @@ import retrofit2.Response;
 
 public class RecipeFragment extends Fragment {
 
-
-
+    public static final String SHARED_PREFERENCE_KEY_INGREDIENTS = "SHARED_PREFERENCE_KEY_INGREDIENTS";
     public RecipeFragment() {
         // Required empty public constructor
     }
