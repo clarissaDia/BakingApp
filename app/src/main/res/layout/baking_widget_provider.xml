@@ -12,6 +12,7 @@
         android:layout_centerVertical="true"
         android:layout_margin="8dp"
         android:contentDescription="@string/appwidget_text"
+        android:text="BAKE"
         android:textColor="#ffffff"
         android:textSize="15sp"
         android:textStyle="bold|italic" />

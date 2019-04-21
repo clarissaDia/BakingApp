@@ -2,24 +2,18 @@ package com.example.android.bakingapp.Widget;
 
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
-import android.preference.PreferenceManager;
 import android.widget.RemoteViews;
 import android.widget.RemoteViewsService;
 
-import com.example.android.bakingapp.MainActivity;
 import com.example.android.bakingapp.R;
-import com.example.android.bakingapp.RecipeFragment;
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
 
-import java.util.ArrayList;
+import java.util.List;
 
-import static com.example.android.bakingapp.Widget.BakingWidgetProvider.ingredientsList;
+import static com.example.android.bakingapp.Widget.BakingWidgetProvider.widgetIngredientsList;
 
 public class BakingWidgetService extends RemoteViewsService {
 
-    ArrayList<String> widgetIngredientsList = new ArrayList<>();
+    List<String> remoteIngredients;
 
     @Override
     public RemoteViewsFactory onGetViewFactory(Intent intent) {
@@ -42,24 +36,7 @@ public class BakingWidgetService extends RemoteViewsService {
 
         @Override
         public void onDataSetChanged() {
-            SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
-            String json = sharedPreferences.getString(MainActivity.SHARED_PREFERENCE_KEY, "");
-            if (json.equals("")){
-                Gson gson = new Gson();
-                ingredientsList = gson.fromJson(json, new TypeToken<ArrayList<String>>(){
-
-                }.getType());
-            }
-SharedPreferences retrievePreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
-            String retieveJson = retrievePreferences.getString(RecipeFragment.SHARED_PREFERENCE_KEY_INGREDIENTS,"");
-            if (retieveJson.equals("")){
-                Gson retrieveGson = new Gson();
-                widgetIngredientsList = retrieveGson.fromJson(json,new TypeToken<ArrayList<String>>(){
-
-                }.getType());
-            }
-
-
+            remoteIngredients = widgetIngredientsList;
         }
 
         @Override
@@ -69,13 +46,13 @@ SharedPreferences retrievePreferences = PreferenceManager.getDefaultSharedPrefer
 
         @Override
         public int getCount() {
-            return ingredientsList.size();
+            return remoteIngredients.size();
         }
 
         @Override
         public RemoteViews getViewAt(int position) {
             RemoteViews remoteViews = new RemoteViews(mContext.getPackageName(),R.layout.baking_widget_grid_item);
-            remoteViews.setTextViewText(R.id.grid_item,ingredientsList.get(position));
+            remoteViews.setTextViewText(R.id.grid_item,remoteIngredients.get(position));
             Intent fillIntent = new Intent();
             remoteViews.setOnClickFillInIntent(R.id.grid_item, fillIntent);
             return remoteViews;

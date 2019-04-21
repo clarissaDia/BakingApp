@@ -26,6 +26,8 @@ String recipeName;
 
     static String STACK_RECIPE_DETAIL="stack_recipe_detail";
     static String STACK_RECIPE_STEP_DETAIL="STACK_RECIPE_STEP_DETAIL";
+    public static String SHARED_PREFERENCE_KEY = "SHARED_PREFERENCE_KEY";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -45,6 +47,15 @@ String recipeName;
                     .replace(R.id.fragment_container, detailFragment)
                     .addToBackStack(STACK_RECIPE_DETAIL)
                     .commit();
+            if(findViewById(R.id.recipe_linear_layout).getTag()!= null
+                    && findViewById(R.id.recipe_linear_layout).getTag().equals("tablet-land")){
+                final StepsFragment stepsFragment = new StepsFragment();
+                stepsFragment.setArguments(indexRecipe);
+                fragmentManager.beginTransaction()
+                        .replace(R.id.fragment_container1,stepsFragment)
+                        .addToBackStack(STACK_RECIPE_STEP_DETAIL)
+                        .commit();
+            }
         }else {
             recipeName = savedInstanceState.getString("Title");
         }
@@ -59,12 +70,15 @@ String recipeName;
             @Override
             public void onClick(View v) {
                 FragmentManager fragmentManager = getSupportFragmentManager();
-                if (fragmentManager.getBackStackEntryCount() > 1){
-                    fragmentManager.popBackStack(STACK_RECIPE_DETAIL, 0);
+                if(findViewById(R.id.fragment_container1)== null){
+                    if (fragmentManager.getBackStackEntryCount() > 1){
+                        fragmentManager.popBackStack(STACK_RECIPE_DETAIL, 0);
+                }else if (fragmentManager.getBackStackEntryCount() > 0) {
+                        //go back to "Recipe" screen
+                        finish();
+
                 }
-                else if (fragmentManager.getBackStackEntryCount() > 0) {
-                    //go back to "Recipe" screen
-                    finish();
+
             }
             else {finish();
 
@@ -75,16 +89,29 @@ String recipeName;
 
     @Override
     public void onItemClick(List<Steps> stepsList, int clickedIndex, String recipeName) {
-final StepsFragment stepsFragment = new StepsFragment();
-FragmentManager fragmentManager = getSupportFragmentManager();
-Bundle stepsBundle = new Bundle();
-stepsBundle.putParcelableArrayList(SELECTED_STEPS,(ArrayList<Steps>)stepsList);
-stepsBundle.putInt(SELECTED_INDEX,clickedIndex);
-stepsBundle.putString("Title",recipeName);
-stepsFragment.setArguments(stepsBundle);
-fragmentManager.beginTransaction()
-        .replace(R.id.fragment_container,stepsFragment).addToBackStack(STACK_RECIPE_STEP_DETAIL)
-        .commit();
+
+        final StepsFragment stepsFragment = new StepsFragment();
+        FragmentManager fragmentManager = getSupportFragmentManager();
+
+        getSupportActionBar().setTitle(recipeName);
+
+        Bundle stepsBundle = new Bundle();
+        stepsBundle.putParcelableArrayList(SELECTED_STEPS, (ArrayList<Steps>) stepsList);
+        stepsBundle.putInt(SELECTED_INDEX, clickedIndex);
+        stepsBundle.putString("Title", recipeName);
+        stepsFragment.setArguments(stepsBundle);
+
+        if (findViewById(R.id.recipe_linear_layout).getTag() != null
+                && findViewById(R.id.recipe_linear_layout).getTag().equals("tablet-land")) {
+            fragmentManager.beginTransaction()
+                    .replace(R.id.fragment_container1, stepsFragment)
+                    .addToBackStack(STACK_RECIPE_STEP_DETAIL)
+                    .commit();
+        } else {
+            fragmentManager.beginTransaction()
+                    .replace(R.id.fragment_container, stepsFragment).addToBackStack(STACK_RECIPE_STEP_DETAIL)
+                    .commit();
+        }
     }
 
     @Override

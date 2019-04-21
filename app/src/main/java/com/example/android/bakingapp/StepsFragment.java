@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.res.Configuration;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -13,6 +12,7 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -25,18 +25,18 @@ import com.google.android.exoplayer2.SimpleExoPlayer;
 import com.google.android.exoplayer2.audio.AudioAttributes;
 import com.google.android.exoplayer2.source.ExtractorMediaSource;
 import com.google.android.exoplayer2.source.MediaSource;
+import com.google.android.exoplayer2.ui.AspectRatioFrameLayout;
 import com.google.android.exoplayer2.ui.PlayerView;
 import com.google.android.exoplayer2.upstream.BandwidthMeter;
 import com.google.android.exoplayer2.upstream.DefaultDataSourceFactory;
 import com.google.android.exoplayer2.util.Util;
 import com.squareup.picasso.Picasso;
 
-
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.example.android.bakingapp.MainActivity.SELECTED_INDEX;
 import static com.example.android.bakingapp.MainActivity.INDEX_RECIPE;
+import static com.example.android.bakingapp.MainActivity.SELECTED_INDEX;
 import static com.example.android.bakingapp.MainActivity.SELECTED_STEPS;
 
 
@@ -48,7 +48,6 @@ public class StepsFragment extends Fragment {
     ArrayList<Recipe> recipeArrayList;
     String mRecipeName;
     private BandwidthMeter bandwidthMeter;
-    private Handler handler;
 
     public StepsFragment() {
         // Required empty public constructor
@@ -66,7 +65,6 @@ public class StepsFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         TextView stepsTextView;
-        handler = new Handler();
       mListClickListener = (RecipeDetailActivity)getActivity();
       recipeArrayList = new ArrayList<>();
 
@@ -99,6 +97,12 @@ stepsTextView.setVisibility(View.VISIBLE);
 playerView = rootView.findViewById(R.id.video_player_view);
 
 String videoUrl = stepsArrayList.get(selectedIndex).getVideoUrl();
+if (rootView.findViewWithTag("sw600dp-port-fragment_steps")!= null){
+    mRecipeName =  ((RecipeDetailActivity) getActivity()).recipeName;
+    ((RecipeDetailActivity) getActivity()).getSupportActionBar().setTitle(mRecipeName);
+
+}
+
 String imageUrl = stepsArrayList.get(selectedIndex).getTumbnailUrl();
 if (imageUrl!=""){
     Uri uri = Uri.parse(imageUrl).buildUpon().build();
@@ -109,15 +113,23 @@ if (imageUrl!=""){
 
 if (!videoUrl.isEmpty()){
     initializePlayer (getActivity(),Uri.parse(stepsArrayList.get(selectedIndex).getVideoUrl()));
-}else {
+}
+if(rootView.findViewWithTag("sw600dp-land-fragment_steps")!= null){
+    getActivity().findViewById(R.id.fragment_container1).setLayoutParams(new LinearLayout.LayoutParams(-1,-2));
+    playerView.setResizeMode(AspectRatioFrameLayout.RESIZE_MODE_FIXED_WIDTH);
+}
+
+else if (isInLandscape(getContext())){
+            stepsTextView.setVisibility(View.GONE);
+        }
+
+else {
     simpleExoPlayer = null;
     Toast.makeText(getActivity(),"no video",Toast.LENGTH_LONG).show();
 
 }
 
-if (isInLandscape(getContext())){
-    stepsTextView.setVisibility(View.GONE);
-}
+
 
         Button previousButton = (Button)  rootView.findViewById(R.id.previous_button);
 Button nextButton = (Button) rootView.findViewById(R.id.next_button);

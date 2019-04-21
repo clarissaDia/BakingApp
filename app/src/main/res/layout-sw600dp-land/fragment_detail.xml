@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true">
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Ingredients"
+        android:padding="10dp"
+        android:textSize="15sp"
+        android:textAllCaps="true"
+        android:gravity="center_horizontal"/>
+
+
+    <ScrollView
+        android:layout_width="wrap_content"
+        android:layout_height="200dp"
+        android:scrollbarStyle="insideInset"
+        android:clipToPadding="false"
+        android:scrollIndicators="top|bottom"
+        android:scrollbarAlwaysDrawVerticalTrack="false"
+        android:isScrollContainer="false"
+        android:fillViewport="false">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:textSize="15sp"
+            android:id="@+id/tv_recipe_ingredients" />
+    </ScrollView>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="steps"
+        android:textSize="15sp"
+        android:textAllCaps="true"
+        android:padding="10dp"
+        android:gravity="center"/>
+
+    <android.support.v7.widget.RecyclerView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/rv_detail">
+
+    </android.support.v7.widget.RecyclerView>
+
+</LinearLayout>

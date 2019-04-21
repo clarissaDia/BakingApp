@@ -1,9 +1,7 @@
 package com.example.android.bakingapp;
 
 
-import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -18,7 +16,6 @@ import com.example.android.bakingapp.Adapters.DetailsAdapter;
 import com.example.android.bakingapp.Models.Ingredients;
 import com.example.android.bakingapp.Models.Recipe;
 import com.example.android.bakingapp.Widget.UpdateBakingWidgetService;
-import com.google.gson.Gson;
 
 import java.util.ArrayList;
 import java.util.Objects;
@@ -29,7 +26,7 @@ import static com.example.android.bakingapp.MainActivity.INDEX_RECIPE;
 public class DetailFragment extends Fragment {
     ArrayList<Recipe> recipeArrayList;
     String recipeName;
-    public static final String SHARED_PREFS_KEY_INGRED = "SHARED_PREFS_KEY";
+
 
 
 
@@ -49,12 +46,16 @@ public class DetailFragment extends Fragment {
             recipeArrayList = Objects.requireNonNull(getArguments()).getParcelableArrayList(INDEX_RECIPE);
         }
 
-        assert recipeArrayList != null;
+       assert recipeArrayList != null;
         recipeName = recipeArrayList.get(0).getName();
+
+
         View rootView = inflater.inflate(R.layout.fragment_detail,container,false);
         detailTextView = (TextView) rootView.findViewById(R.id.tv_recipe_ingredients);
+
         ArrayList<String> ingredientsForWidget = new ArrayList<>();
-        for (Ingredients i : recipeArrayList.get(0).getIngredients()) {
+
+        for (Ingredients i  : recipeArrayList.get(0).getIngredients()) {
             detailTextView.append("\u2022 " + i.getIngredient() + "\n");
             detailTextView.append("\t\t\t Quantity: " + i.getQuantity().toString() + "\n");
             detailTextView.append("\t\t\t Measure: " + i.getMeasure() + "\n\n");
@@ -62,11 +63,8 @@ public class DetailFragment extends Fragment {
             ingredientsForWidget.add(i.getIngredient()+"\n"+
                     "Quantity: "+i.getQuantity().toString()+"\n"+
                     "Measure: "+i.getMeasure()+"\n");
-            Gson widgetGson = new Gson();
-            String widgetJson = widgetGson.toJson(ingredientsForWidget);
-            SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getContext());
-            SharedPreferences.Editor editor = preferences.edit();
-            editor.putString(SHARED_PREFS_KEY_INGRED,widgetJson).apply();
+
+
         }
 
 
