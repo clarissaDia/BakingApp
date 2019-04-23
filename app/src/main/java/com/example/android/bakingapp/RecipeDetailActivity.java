@@ -21,7 +21,7 @@ import static com.example.android.bakingapp.MainActivity.SELECTED_STEPS;
 public class RecipeDetailActivity extends AppCompatActivity implements DetailsAdapter.ListClickListener,
 StepsFragment.ListClickListener{
 
-private ArrayList<Recipe> recipeArrayList;
+public ArrayList<Recipe> recipeArrayList;
 String recipeName;
 
     static String STACK_RECIPE_DETAIL="stack_recipe_detail";

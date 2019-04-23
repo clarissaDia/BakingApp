@@ -28,7 +28,11 @@ public class BakingWidgetProvider extends AppWidgetProvider {
 
         // Construct the RemoteViews object
         RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.baking_widget_gridview);
+       /** Bundle indexRecipe = new Bundle();**/
+
         Intent appIntent = new Intent(context, RecipeDetailActivity.class);
+        appIntent.putExtra("indexRecipe",widgetIngredientsList);
+
         appIntent.addCategory(Intent.ACTION_MAIN);
         appIntent.addCategory(Intent.CATEGORY_LAUNCHER);
         appIntent.addFlags(Intent.FLAG_ACTIVITY_BROUGHT_TO_FRONT|Intent.FLAG_ACTIVITY_SINGLE_TOP);
@@ -80,6 +84,4 @@ public class BakingWidgetProvider extends AppWidgetProvider {
             super.onReceive(context, intent);
         }
     }
-
-
 }
