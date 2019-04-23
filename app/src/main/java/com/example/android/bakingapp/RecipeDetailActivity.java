@@ -117,7 +117,7 @@ String recipeName;
     @Override
     protected void onSaveInstanceState(@Nullable Bundle savedInstanceState) {
         super.onSaveInstanceState(savedInstanceState);
-        assert savedInstanceState != null;
+        assert savedInstanceState != null;   
         savedInstanceState.putString("Title",recipeName);
     }
 }
