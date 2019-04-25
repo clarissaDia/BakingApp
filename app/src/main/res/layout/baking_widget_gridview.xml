@@ -1,17 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-<GridView
-    android:id="@+id/baking_widget_gridview"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:numColumns="1"
-    android:columnWidth="15dp"
-    android:horizontalSpacing="5dp"
-    android:verticalSpacing="5dp">
+    <GridView
+        android:id="@+id/baking_widget_gridview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:columnWidth="@dimen/spacing_15dp"
+        android:horizontalSpacing="@dimen/spacing_5dp"
+        android:numColumns="1"
+        android:verticalSpacing="@dimen/spacing_5dp">
 
-</GridView>
+    </GridView>
 </FrameLayout>

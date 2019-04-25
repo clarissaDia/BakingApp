@@ -10,50 +10,49 @@
     <com.google.android.exoplayer2.ui.PlayerView
         android:id="@+id/video_player_view"
         android:layout_width="match_parent"
-        android:layout_height="250dp"
+        android:layout_height="@dimen/dimens_250dp"
+        android:layout_margin="@dimen/spacing_10dp"
+        android:layout_marginLeft="0dp"
         android:layout_marginTop="0dp"
         android:layout_marginRight="0dp"
-        android:layout_marginBottom="10dp"
-        android:layout_marginLeft="0dp"
-        android:layout_margin="10dp"
-        />
+        android:layout_marginBottom="@dimen/spacing_10dp" />
 
     <ImageView
         android:id="@+id/iv_thumbImage"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="left"
-        />
+        android:layout_gravity="left" />
 
     <TextView
         android:id="@+id/tv_step_text"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="15dp"/>
+        android:layout_marginBottom="@dimen/spacing_15dp"
+        android:textColor="@color/textColor" />
+
     <LinearLayout
         android:layout_width="wrap_content"
-        android:layout_height="70dp"
-        android:orientation="horizontal"
-        android:layout_gravity="center_horizontal">
+        android:layout_height="@dimen/dimens_70dp"
+        android:layout_gravity="center_horizontal"
+        android:orientation="horizontal">
+
         <Button
             android:id="@+id/previous_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/spacing_10dp"
+            android:layout_marginRight="@dimen/spacing_10dp"
             android:gravity="center_horizontal"
-            android:layout_marginTop="10dp"
-            android:text="Previous"
-            android:layout_marginRight="10dp"
-            />
+            android:text="@string/previous" />
 
         <Button
             android:id="@+id/next_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/spacing_10dp"
+            android:layout_marginTop="@dimen/spacing_10dp"
             android:gravity="center_horizontal"
-            android:layout_marginTop="10dp"
-            android:text="Next"
-            android:layout_marginLeft="10dp"
-            />
+            android:text="@string/next" />
 
     </LinearLayout>
 </LinearLayout>

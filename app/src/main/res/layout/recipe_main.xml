@@ -10,12 +10,12 @@
     <include
         layout="@layout/toolbar"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
-<fragment
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:name="com.example.android.bakingapp.RecipeFragment"
-    android:id="@+id/fragment_recipe"
-    />
+        android:layout_height="wrap_content" />
+
+    <fragment
+        android:id="@+id/fragment_recipe"
+        android:name="com.example.android.bakingapp.RecipeFragment"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
 
 </LinearLayout>

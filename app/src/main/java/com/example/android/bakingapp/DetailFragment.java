@@ -27,9 +27,6 @@ public class DetailFragment extends Fragment {
     ArrayList<Recipe> recipeArrayList;
     String recipeName;
 
-
-
-
     public DetailFragment() {
         // Required empty public constructor
     }
@@ -40,43 +37,40 @@ public class DetailFragment extends Fragment {
         RecyclerView detailsRecyclerView;
         final TextView detailTextView;
         recipeArrayList = new ArrayList<>();
-        if (savedInstanceState != null){
+        if (savedInstanceState != null) {
             recipeArrayList = savedInstanceState.getParcelableArrayList(INDEX_RECIPE);
-        }else {
+        } else {
             recipeArrayList = Objects.requireNonNull(getArguments()).getParcelableArrayList(INDEX_RECIPE);
         }
 
-       assert recipeArrayList != null;
+        assert recipeArrayList != null;
         recipeName = recipeArrayList.get(0).getName();
 
 
-        View rootView = inflater.inflate(R.layout.fragment_detail,container,false);
+        View rootView = inflater.inflate(R.layout.fragment_detail, container, false);
         detailTextView = (TextView) rootView.findViewById(R.id.tv_recipe_ingredients);
 
         ArrayList<String> ingredientsForWidget = new ArrayList<>();
 
-        for (Ingredients i  : recipeArrayList.get(0).getIngredients()) {
+        for (Ingredients i : recipeArrayList.get(0).getIngredients()) {
             detailTextView.append("\u2022 " + i.getIngredient() + "\n");
             detailTextView.append("\t\t\t Quantity: " + i.getQuantity().toString() + "\n");
             detailTextView.append("\t\t\t Measure: " + i.getMeasure() + "\n\n");
 
-            ingredientsForWidget.add(i.getIngredient()+"\n"+
-                    "Quantity: "+i.getQuantity().toString()+"\n"+
-                    "Measure: "+i.getMeasure()+"\n");
-
-
+            ingredientsForWidget.add(i.getIngredient() + "\n" +
+                    "Quantity: " + i.getQuantity().toString() + "\n" +
+                    "Measure: " + i.getMeasure() + "\n");
         }
 
-
-        detailsRecyclerView = (RecyclerView)rootView.findViewById(R.id.rv_detail);
+        detailsRecyclerView = (RecyclerView) rootView.findViewById(R.id.rv_detail);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
         detailsRecyclerView.setLayoutManager(linearLayoutManager);
 
-        DetailsAdapter detailsAdapter = new DetailsAdapter((RecipeDetailActivity)getActivity());
+        DetailsAdapter detailsAdapter = new DetailsAdapter((RecipeDetailActivity) getActivity());
         detailsRecyclerView.setAdapter(detailsAdapter);
-        detailsAdapter.setRecipeDetails(recipeArrayList,getContext());
+        detailsAdapter.setRecipeDetails(recipeArrayList, getContext());
 
-        UpdateBakingWidgetService.startBakingWidgetService(getContext(),ingredientsForWidget);
+        UpdateBakingWidgetService.startBakingWidgetService(getContext(), ingredientsForWidget);
 
         return rootView;
     }

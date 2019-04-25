@@ -10,19 +10,18 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:textSize="@dimen/recipe_title"
-        android:layout_marginTop="15dp"
-        android:layout_marginBottom="15dp"
-        android:layout_marginLeft="15dp"
-        />
+        android:layout_marginTop="@dimen/spacing_15dp"
+        android:layout_marginBottom="@dimen/spacing_15dp"
+        android:textColor="#E65100"
+        android:textSize="@dimen/text_size_30sp" />
 
     <ImageView
-        android:contentDescription="recipe_image"
         android:id="@+id/iv_recipe"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:layout_marginBottom="10dp"
-        android:layout_gravity="center"/>
+        android:layout_width="@dimen/dimens_60dp"
+        android:layout_height="@dimen/dimens_60dp"
+        android:layout_gravity="center"
+        android:layout_marginTop="@dimen/spacing_10dp"
+        android:layout_marginBottom="@dimen/spacing_10dp"
+        android:contentDescription="recipe_image" />
 
 </LinearLayout>

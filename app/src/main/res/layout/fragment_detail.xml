@@ -8,43 +8,42 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Ingredients"
-        android:textSize="25sp"
+        android:gravity="center"
+        android:text="@string/ingredients"
         android:textAllCaps="true"
-        android:gravity="center"/>
+        android:textSize="@dimen/text_size_25sp"/>
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="230dp"
-        android:scrollbarStyle="insideInset"
+        android:layout_height="@dimen/height_230dp"
         android:clipToPadding="false"
+        android:fillViewport="false"
+        android:isScrollContainer="false"
         android:scrollIndicators="top|bottom"
         android:scrollbarAlwaysDrawVerticalTrack="false"
-        android:isScrollContainer="false"
-        android:fillViewport="false">
+        android:scrollbarStyle="insideInset">
 
         <TextView
+            android:id="@+id/tv_recipe_ingredients"
             android:layout_width="match_parent"
-            android:layout_height="200dp"
-            android:textSize="15sp"
-            android:layout_marginLeft="10dp"
-            android:id="@+id/tv_recipe_ingredients" />
+            android:layout_height="@dimen/dimens_200dp"
+            android:layout_marginLeft="@dimen/spacing_10dp"
+            android:textColor="@color/textColor"
+            android:textSize="@dimen/text_size_15sp" />
     </ScrollView>
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="steps"
-        android:textSize="25sp"
+        android:gravity="center"
+        android:text="@string/steps"
         android:textAllCaps="true"
-        android:gravity="center"/>
+        android:textSize="@dimen/text_size_25sp"/>
 
     <android.support.v7.widget.RecyclerView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
         android:id="@+id/rv_detail"
-        >
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
     </android.support.v7.widget.RecyclerView>
-
 
 </LinearLayout>

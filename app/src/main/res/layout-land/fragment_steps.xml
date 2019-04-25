@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:tools="http://schemas.android.com/tools"
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="horizontal"
@@ -9,14 +9,14 @@
 
     <com.google.android.exoplayer2.ui.PlayerView
         android:id="@+id/video_player_view"
-        android:layout_width="550dp"
+        android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_gravity="start"
+        android:layout_margin="0dp"
+        android:layout_marginLeft="0dp"
         android:layout_marginTop="0dp"
         android:layout_marginRight="0dp"
         android:layout_marginBottom="0dp"
-        android:layout_marginLeft="0dp"
-        android:layout_margin="0dp"
         />
 
     <ImageView
@@ -30,35 +30,34 @@
         android:id="@+id/tv_step_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:visibility="gone"
-        android:layout_marginBottom="15dp"/>
+        android:layout_marginBottom="@dimen/spacing_15dp"
+        android:textColor="@color/textColor"
+        android:visibility="gone"/>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
+        android:layout_gravity="center_horizontal"
         android:gravity="center_vertical"
-        android:layout_gravity="center_horizontal">
+        android:orientation="vertical">
 
         <Button
             android:id="@+id/previous_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
-            android:text="Prev"
-            android:layout_marginRight="5dp"
-            android:layout_marginLeft="5dp"
-            />
+            android:layout_marginLeft="@dimen/spacing_5dp"
+            android:layout_marginRight="@dimen/spacing_5dp"
+            android:text="@string/prev" />
 
         <Button
             android:id="@+id/next_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
-            android:text="Next"
-            android:layout_marginTop="5dp"
-            android:layout_marginLeft="5dp"
-            />
+            android:layout_marginLeft="@dimen/spacing_5dp"
+            android:layout_marginTop="@dimen/spacing_5dp"
+            android:text="@string/next" />
 
 </LinearLayout>
 </LinearLayout>

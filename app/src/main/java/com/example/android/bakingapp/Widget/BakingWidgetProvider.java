@@ -8,8 +8,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.widget.RemoteViews;
 
+import com.example.android.bakingapp.MainActivity;
 import com.example.android.bakingapp.R;
-import com.example.android.bakingapp.RecipeDetailActivity;
 
 import java.util.ArrayList;
 import java.util.Objects;
@@ -18,21 +18,16 @@ import java.util.Objects;
  * Implementation of App Widget functionality.
  */
 public class BakingWidgetProvider extends AppWidgetProvider {
-    public static String REMOTE_INGREDIENTS ="REMOTE_INGREDIENTS";
-    public static String REMOTE_BUNDLE ="REMOTE_BUNDLE";
-    static ArrayList<String> widgetIngredientsList = new ArrayList<>();
 
+    static ArrayList<String> widgetIngredientsList = new ArrayList<>();
 
     static void updateAppWidget(Context context, AppWidgetManager appWidgetManager,
                                 int appWidgetId) {
 
         // Construct the RemoteViews object
         RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.baking_widget_gridview);
-       /** Bundle indexRecipe = new Bundle();**/
 
-        Intent appIntent = new Intent(context, RecipeDetailActivity.class);
-        appIntent.putExtra("indexRecipe",widgetIngredientsList);
-
+        Intent appIntent = new Intent(context, MainActivity.class);
         appIntent.addCategory(Intent.ACTION_MAIN);
         appIntent.addCategory(Intent.CATEGORY_LAUNCHER);
         appIntent.addFlags(Intent.FLAG_ACTIVITY_BROUGHT_TO_FRONT|Intent.FLAG_ACTIVITY_SINGLE_TOP);
@@ -51,7 +46,6 @@ public class BakingWidgetProvider extends AppWidgetProvider {
         //for (int appWidgetId : appWidgetIds) {
         //updateAppWidget(context, appWidgetManager, appWidgetId);
         //}
-
     }
 
     public static void updateBakingWidget (Context context, AppWidgetManager appWidgetManager,

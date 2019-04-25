@@ -7,16 +7,16 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Ingredients"
-        android:padding="10dp"
-        android:textSize="15sp"
+        android:text="@string/ingredients"
+        android:padding="@dimen/spacing_10dp"
+        android:textSize="@dimen/text_size_15sp"
         android:textAllCaps="true"
         android:gravity="center_horizontal"/>
 
 
     <ScrollView
         android:layout_width="wrap_content"
-        android:layout_height="200dp"
+        android:layout_height="@dimen/dimens_200dp"
         android:scrollbarStyle="insideInset"
         android:clipToPadding="false"
         android:scrollIndicators="top|bottom"
@@ -27,24 +27,24 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:textSize="15sp"
+            android:textSize="@dimen/text_size_15sp"
+            android:textColor="@color/textColor"
             android:id="@+id/tv_recipe_ingredients" />
     </ScrollView>
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="steps"
-        android:textSize="15sp"
+        android:text="@string/steps"
+        android:textSize="@dimen/text_size_15sp"
         android:textAllCaps="true"
-        android:padding="10dp"
+        android:padding="@dimen/spacing_10dp"
         android:gravity="center"/>
 
     <android.support.v7.widget.RecyclerView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/rv_detail">
-
     </android.support.v7.widget.RecyclerView>
 
 </LinearLayout>

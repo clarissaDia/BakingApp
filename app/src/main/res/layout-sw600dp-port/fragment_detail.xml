@@ -8,14 +8,14 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Ingredients"
-        android:textSize="25sp"
+        android:text="@string/ingredients"
+        android:textSize="@dimen/text_size_15sp"
         android:textAllCaps="true"
         android:gravity="center"/>
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="230dp"
+        android:layout_height="@dimen/height_230dp"
         android:scrollbarStyle="insideInset"
         android:clipToPadding="false"
         android:scrollIndicators="top|bottom"
@@ -25,26 +25,24 @@
 
         <TextView
             android:layout_width="match_parent"
-            android:layout_height="200dp"
-            android:textSize="15sp"
-            android:layout_marginLeft="10dp"
+            android:layout_height="@dimen/dimens_200dp"
+            android:textSize="@dimen/text_size_15sp"
+            android:layout_marginLeft="@dimen/spacing_10dp"
+            android:textColor="@color/textColor"
             android:id="@+id/tv_recipe_ingredients" />
     </ScrollView>
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="steps"
-        android:textSize="25sp"
+        android:text="@string/steps"
+        android:textSize="@dimen/text_size_25sp"
         android:textAllCaps="true"
         android:gravity="center"/>
 
     <android.support.v7.widget.RecyclerView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/rv_detail"
-        >
+        android:id="@+id/rv_detail">
     </android.support.v7.widget.RecyclerView>
-
-
 </LinearLayout>

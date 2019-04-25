@@ -43,5 +43,4 @@ public void testRecipe (){
             IdlingRegistry.getInstance().unregister(idlingResource);
         }
     }
-
 }

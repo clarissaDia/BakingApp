@@ -27,7 +27,6 @@ import com.google.android.exoplayer2.source.ExtractorMediaSource;
 import com.google.android.exoplayer2.source.MediaSource;
 import com.google.android.exoplayer2.ui.AspectRatioFrameLayout;
 import com.google.android.exoplayer2.ui.PlayerView;
-import com.google.android.exoplayer2.upstream.BandwidthMeter;
 import com.google.android.exoplayer2.upstream.DefaultDataSourceFactory;
 import com.google.android.exoplayer2.util.Util;
 import com.squareup.picasso.Picasso;
@@ -37,152 +36,141 @@ import java.util.List;
 
 import static com.example.android.bakingapp.MainActivity.INDEX_RECIPE;
 import static com.example.android.bakingapp.MainActivity.SELECTED_INDEX;
-import static com.example.android.bakingapp.MainActivity.SELECTED_STEPS;
+import static com.example.android.bakingapp.MainActivity.INDEX_STEPS;
 
 
 public class StepsFragment extends Fragment {
+    ArrayList<Recipe> recipeArrayList;
+    String mRecipeName;
     private PlayerView playerView;
     private SimpleExoPlayer simpleExoPlayer;
     private ArrayList<Steps> stepsArrayList = new ArrayList<>();
     private int selectedIndex;
-    ArrayList<Recipe> recipeArrayList;
-    String mRecipeName;
-    private BandwidthMeter bandwidthMeter;
+    private DetailsAdapter.ListClickListener mListClickListener;
 
     public StepsFragment() {
         // Required empty public constructor
     }
 
-   private DetailsAdapter.ListClickListener mListClickListener;
-
-    public interface ListClickListener {
-        void onItemClick (List<Steps> stepsList, int clickedIndex, String recipeName);
-
-    }
-
-
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         TextView stepsTextView;
-      mListClickListener = (RecipeDetailActivity)getActivity();
-      recipeArrayList = new ArrayList<>();
+        mListClickListener = (RecipeDetailActivity) getActivity();
+        recipeArrayList = new ArrayList<>();
 
-      if (savedInstanceState != null){
-          stepsArrayList = savedInstanceState.getParcelableArrayList(SELECTED_STEPS);
-          selectedIndex = savedInstanceState.getInt(SELECTED_INDEX);
-          mRecipeName = savedInstanceState.getString("Title");
+        if (savedInstanceState != null) {
+            stepsArrayList = savedInstanceState.getParcelableArrayList(INDEX_STEPS);
+            selectedIndex = savedInstanceState.getInt(SELECTED_INDEX);
+            mRecipeName = savedInstanceState.getString("Title");
 
-      }else {
-          assert getArguments() != null;
-          stepsArrayList = getArguments().getParcelableArrayList(SELECTED_STEPS);
-          if (stepsArrayList != null){
-              stepsArrayList = getArguments().getParcelableArrayList(SELECTED_STEPS);
-              selectedIndex = getArguments().getInt(SELECTED_INDEX);
-              mRecipeName = getArguments().getString("Title");
+        } else {
+            assert getArguments() != null;
+            stepsArrayList = getArguments().getParcelableArrayList(INDEX_STEPS);
+            if (stepsArrayList != null) {
+                stepsArrayList = getArguments().getParcelableArrayList(INDEX_STEPS);
+                selectedIndex = getArguments().getInt(SELECTED_INDEX);
+                mRecipeName = getArguments().getString("Title");
 
-          }
-          else {
-              recipeArrayList = getArguments().getParcelableArrayList(INDEX_RECIPE);
-              stepsArrayList = (ArrayList<Steps>)recipeArrayList.get(0).getSteps();
-              selectedIndex = 0;
-          }
-      }
-
-
-View rootView = inflater.inflate(R.layout.fragment_steps,container,false);
-stepsTextView = (TextView) rootView.findViewById(R.id.tv_step_text);
-stepsTextView.setText(stepsArrayList.get(selectedIndex).getDescription());
-stepsTextView.setVisibility(View.VISIBLE);
-playerView = rootView.findViewById(R.id.video_player_view);
-
-String videoUrl = stepsArrayList.get(selectedIndex).getVideoUrl();
-if (rootView.findViewWithTag("sw600dp-port-fragment_steps")!= null){
-    mRecipeName =  ((RecipeDetailActivity) getActivity()).recipeName;
-    ((RecipeDetailActivity) getActivity()).getSupportActionBar().setTitle(mRecipeName);
-
-}
-
-String imageUrl = stepsArrayList.get(selectedIndex).getTumbnailUrl();
-if (imageUrl!=""){
-    Uri uri = Uri.parse(imageUrl).buildUpon().build();
-    ImageView thumbImage = rootView.findViewById(R.id.iv_thumbImage);
-    Picasso.get().load(uri).into(thumbImage);
-
-}
-
-if (!videoUrl.isEmpty()){
-    initializePlayer (getActivity(),Uri.parse(stepsArrayList.get(selectedIndex).getVideoUrl()));
-}
-if(rootView.findViewWithTag("sw600dp-land-fragment_steps")!= null){
-    getActivity().findViewById(R.id.fragment_container1).setLayoutParams(new LinearLayout.LayoutParams(-1,-2));
-    playerView.setResizeMode(AspectRatioFrameLayout.RESIZE_MODE_FIXED_WIDTH);
-}
-
-else if (isInLandscape(getContext())){
-            stepsTextView.setVisibility(View.GONE);
-        }
-
-else {
-    simpleExoPlayer = null;
-    Toast.makeText(getActivity(),"no video",Toast.LENGTH_LONG).show();
-
-}
-
-
-
-        Button previousButton = (Button)  rootView.findViewById(R.id.previous_button);
-Button nextButton = (Button) rootView.findViewById(R.id.next_button);
-
-previousButton.setOnClickListener(new OnClickListener() {
-    @Override
-    public void onClick(View v) {
-        if (stepsArrayList.get(selectedIndex).getId() > 0){
-            if (simpleExoPlayer != null){
-                simpleExoPlayer.stop();
+            } else {
+                recipeArrayList = getArguments().getParcelableArrayList(INDEX_RECIPE);
+                stepsArrayList = (ArrayList<Steps>) recipeArrayList.get(0).getSteps();
+                selectedIndex = 0;
             }
-            mListClickListener.onItemClick(stepsArrayList, stepsArrayList.get(selectedIndex).getId() - 1,
-                    mRecipeName);
-        }else {
-            Toast.makeText(getActivity(),"You already are in the First step of the recipe", Toast.LENGTH_SHORT).show();
         }
-    }
-});
 
-nextButton.setOnClickListener(new OnClickListener() {
-    @Override
-    public void onClick(View v) {
-        int lastIndex = stepsArrayList.size()-1;
-        if (stepsArrayList.get(selectedIndex).getId() < stepsArrayList.get(lastIndex).getId()){
-            if (simpleExoPlayer != null){
-                simpleExoPlayer.stop();
+        View rootView = inflater.inflate(R.layout.fragment_steps, container, false);
+        stepsTextView = (TextView) rootView.findViewById(R.id.tv_step_text);
+        stepsTextView.setText(stepsArrayList.get(selectedIndex).getDescription());
+        stepsTextView.setVisibility(View.VISIBLE);
+        playerView = rootView.findViewById(R.id.video_player_view);
+        playerView.setResizeMode(AspectRatioFrameLayout.RESIZE_MODE_FIT);
+
+        String videoUrl = stepsArrayList.get(selectedIndex).getVideoUrl();
+
+        if (rootView.findViewWithTag("sw600dp-port-fragment_steps") != null) {
+            mRecipeName = ((RecipeDetailActivity) getActivity()).recipeName;
+            ((RecipeDetailActivity) getActivity()).getSupportActionBar().setTitle(mRecipeName);
+
+        }
+
+        String imageUrl = stepsArrayList.get(selectedIndex).getTumbnailUrl();
+
+        if (imageUrl != "") {
+            Uri uri = Uri.parse(imageUrl).buildUpon().build();
+            ImageView thumbImage = rootView.findViewById(R.id.iv_thumbImage);
+            Picasso.get().load(uri).into(thumbImage);
+
+        }
+
+        if (!videoUrl.isEmpty()) {
+            initializePlayer(getActivity(), Uri.parse(stepsArrayList.get(selectedIndex).getVideoUrl()));
+
+
+            if (rootView.findViewWithTag("sw600dp-land-fragment_steps") != null) {
+                getActivity().findViewById(R.id.fragment_container1).setLayoutParams(new LinearLayout.LayoutParams(-1, -2));
+                playerView.setResizeMode(AspectRatioFrameLayout.RESIZE_MODE_FIXED_WIDTH);
+
+            } else if (isInLandscape(getContext())) {
+                stepsTextView.setVisibility(View.GONE);
             }
-            mListClickListener.onItemClick(stepsArrayList,stepsArrayList.get(selectedIndex).getId() + 1,
-                    mRecipeName);
-        }else {
-            Toast.makeText(getContext(),"You already are in the Last step of the recipe", Toast.LENGTH_SHORT).show();
+        } else {
+            simpleExoPlayer = null;
+            Toast.makeText(getActivity(), R.string.no_video, Toast.LENGTH_SHORT).show();
+
         }
 
-    }
-});
+
+        Button previousButton = (Button) rootView.findViewById(R.id.previous_button);
+        Button nextButton = (Button) rootView.findViewById(R.id.next_button);
+
+        previousButton.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (stepsArrayList.get(selectedIndex).getId() > 0) {
+                    if (simpleExoPlayer != null) {
+                        simpleExoPlayer.stop();
+                    }
+                    mListClickListener.onItemClick(stepsArrayList, stepsArrayList.get(selectedIndex).getId() - 1,
+                            mRecipeName);
+                } else {
+                    Toast.makeText(getActivity(), R.string.first_step, Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+
+        nextButton.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int lastIndex = stepsArrayList.size() - 1;
+                if (stepsArrayList.get(selectedIndex).getId() < stepsArrayList.get(lastIndex).getId()) {
+                    if (simpleExoPlayer != null) {
+                        simpleExoPlayer.stop();
+                    }
+                    mListClickListener.onItemClick(stepsArrayList, stepsArrayList.get(selectedIndex).getId() + 1,
+                            mRecipeName);
+                } else {
+                    Toast.makeText(getContext(),R.string.last_step, Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
         // Inflate the layout for this fragment
         return rootView;
     }
 
-
-    private void initializePlayer(Context context, Uri mediaUri){
-        if (simpleExoPlayer == null){
-simpleExoPlayer = ExoPlayerFactory.newSimpleInstance(context);
-playerView.setPlayer(simpleExoPlayer);
-playerView.setShowBuffering(PlayerView.SHOW_BUFFERING_WHEN_PLAYING);
-simpleExoPlayer.setPlayWhenReady(true);
+    private void initializePlayer(Context context, Uri mediaUri) {
+        if (simpleExoPlayer == null) {
+            simpleExoPlayer = ExoPlayerFactory.newSimpleInstance(context);
+            playerView.setPlayer(simpleExoPlayer);
+            playerView.setShowBuffering(PlayerView.SHOW_BUFFERING_WHEN_PLAYING);
+            simpleExoPlayer.setPlayWhenReady(true);
             AudioAttributes audioAttributes = new AudioAttributes.Builder().setUsage(C.USAGE_MEDIA)
                     .setContentType(C.CONTENT_TYPE_SPEECH)
                     .build();
-            simpleExoPlayer.setAudioAttributes(audioAttributes,true);
-            String userAgent = Util.getUserAgent(context,context.getString(R.string.app_name));
+            simpleExoPlayer.setAudioAttributes(audioAttributes, true);
+            String userAgent = Util.getUserAgent(context, context.getString(R.string.app_name));
             MediaSource mediaSource = new ExtractorMediaSource.Factory(
-                    new DefaultDataSourceFactory(context,userAgent)).createMediaSource(mediaUri);
+                    new DefaultDataSourceFactory(context, userAgent)).createMediaSource(mediaUri);
             simpleExoPlayer.prepare(mediaSource);
         }
     }
@@ -190,21 +178,19 @@ simpleExoPlayer.setPlayWhenReady(true);
     @Override
     public void onSaveInstanceState(@NonNull Bundle outState) {
         super.onSaveInstanceState(outState);
-        outState.putParcelableArrayList(SELECTED_STEPS,stepsArrayList);
-        outState.putInt(SELECTED_INDEX,selectedIndex);
+        outState.putParcelableArrayList(INDEX_STEPS, stepsArrayList);
+        outState.putInt(SELECTED_INDEX, selectedIndex);
         outState.putString("Title", mRecipeName);
     }
 
-    public boolean isInLandscape (Context context){
+    public boolean isInLandscape(Context context) {
         return (context.getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE);
     }
-
-
 
     @Override
     public void onDetach() {
         super.onDetach();
-        if(simpleExoPlayer!=null){
+        if (simpleExoPlayer != null) {
             simpleExoPlayer.stop();
             simpleExoPlayer.release();
         }
@@ -214,17 +200,17 @@ simpleExoPlayer.setPlayWhenReady(true);
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        if (simpleExoPlayer!=null){
+        if (simpleExoPlayer != null) {
             simpleExoPlayer.stop();
             simpleExoPlayer.release();
-            simpleExoPlayer=null;
+            simpleExoPlayer = null;
         }
     }
 
     @Override
     public void onStop() {
         super.onStop();
-        if (simpleExoPlayer!=null){
+        if (simpleExoPlayer != null) {
             simpleExoPlayer.stop();
             simpleExoPlayer.release();
         }
@@ -233,9 +219,14 @@ simpleExoPlayer.setPlayWhenReady(true);
     @Override
     public void onPause() {
         super.onPause();
-        if (simpleExoPlayer!=null){
+        if (simpleExoPlayer != null) {
             simpleExoPlayer.stop();
             simpleExoPlayer.release();
         }
+    }
+
+    public interface ListClickListener {
+        void onItemClick(List<Steps> stepsList, int clickedIndex, String recipeName);
+
     }
 }

@@ -22,7 +22,7 @@
 
         <FrameLayout
             android:id="@+id/fragment_container"
-            android:layout_width="250dp"
+            android:layout_width="@dimen/detail_land_frame_w"
             android:layout_height="match_parent"
             android:scaleType="centerInside" />
 

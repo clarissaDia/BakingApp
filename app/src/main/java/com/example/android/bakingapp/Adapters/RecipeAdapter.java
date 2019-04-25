@@ -16,23 +16,19 @@ import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
-public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.RecipeViewHolder>  {
+public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.RecipeViewHolder> {
+    final private ClickListener clickListener;
     ArrayList<Recipe> mRecipes;
     Context mContext;
-    final private ClickListener clickListener;
 
 
-    public interface ClickListener {
-        void onItemClick(Recipe index);
-    }
-
-    public RecipeAdapter (ClickListener listenter){
+    public RecipeAdapter(ClickListener listenter) {
         clickListener = listenter;
     }
 
-    public void setRecipes(ArrayList<Recipe> recipes, Context context){
+    public void setRecipes(ArrayList<Recipe> recipes, Context context) {
         mRecipes = recipes;
-        mContext= context;
+        mContext = context;
         notifyDataSetChanged();
     }
 
@@ -51,12 +47,12 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.RecipeView
         recipeViewHolder.titleTextView.setText(mRecipes.get(position).getName());
         String imageUrl = mRecipes.get(position).getImage();
 
-if(imageUrl != null && imageUrl.isEmpty()) {
-    recipeViewHolder.imageView.setImageResource(R.drawable.baseline_cake_black_48dp);
-}else {
-    Uri uri = Uri.parse(imageUrl).buildUpon().build();
-    Picasso.get().load(uri).into(recipeViewHolder.imageView);
-}
+        if (imageUrl != null && imageUrl.isEmpty()) {
+            recipeViewHolder.imageView.setImageResource(R.drawable.baseline_cake_black_48dp);
+        } else {
+            Uri uri = Uri.parse(imageUrl).buildUpon().build();
+            Picasso.get().load(uri).into(recipeViewHolder.imageView);
+        }
 
     }
 
@@ -67,16 +63,19 @@ if(imageUrl != null && imageUrl.isEmpty()) {
 
     }
 
+    public interface ClickListener {
+        void onItemClick(Recipe index);
+    }
 
-    public class RecipeViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
+    public class RecipeViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         TextView titleTextView;
         ImageView imageView;
 
-        public RecipeViewHolder(View view){
-super(view);
-titleTextView = (TextView) view.findViewById(R.id.tv_title);
-imageView = (ImageView) view.findViewById(R.id.iv_recipe);
-view.setOnClickListener(this);
+        public RecipeViewHolder(View view) {
+            super(view);
+            titleTextView = (TextView) view.findViewById(R.id.tv_title);
+            imageView = (ImageView) view.findViewById(R.id.iv_recipe);
+            view.setOnClickListener(this);
         }
 
         @Override

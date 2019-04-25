@@ -16,7 +16,6 @@ public class UpdateBakingWidgetService extends IntentService {
         Intent intent = new Intent(context, UpdateBakingWidgetService.class);
         intent.putExtra("INGREDIENTS_LIST", ingredientsList);
         context.startService(intent);
-
     }
 
     @Override
@@ -25,7 +24,6 @@ public class UpdateBakingWidgetService extends IntentService {
             ArrayList<String> ingredientsList = intent.getExtras().getStringArrayList("INGREDIENTS_LIST");
             actionUpdateBakingWidgetService(ingredientsList);
         }
-
     }
 
     private void actionUpdateBakingWidgetService (ArrayList<String> ingredientsList){
